@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, render_template
 from datetime import datetime
 from flask_cors import CORS
 app = Flask(__name__)
+CORS(app)
 
 # Simulated in-memory database
 rides_db = []
@@ -34,5 +35,8 @@ def book_ride():
 def demand_alerts():
     return jsonify({'demand_areas': driver_demand_areas})
 
-if __name__ == '__main__':
-    app.run(debug=True)
+import os
+
+if _name_ == "_main_":
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host="0.0.0.0", port=port)
