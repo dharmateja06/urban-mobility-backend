@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Urban Mobility App</title>
+</head>
+<body>
+  <h2>Book a Ride</h2>
+  <label>Pickup Location:</label>
+  <input type="text" id="pickup"><br><br>
+
+  <label>Drop Location:</label>
+  <input type="text" id="drop"><br><br>
+
+  <label>Mode:</label>
+  <input type="radio" name="mode" value="normal" checked> Normal
+  <input type="radio" name="mode" value="emergency"> Emergency<br><br>
+
+  <button onclick="bookRide()">Book Ride</button>
+
+  <script>
+    function bookRide() {
+      const pickup = document.getElementById('pickup').value;
+      const drop = document.getElementById('drop').value;
+      const mode = document.querySelector('input[name="mode"]:checked').value;
+
+      fetch('/book_ride', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pickup, drop, mode })
+      })
+      .then(response => response.json())
+      .then(data => {
+        alert(data.message);
+        console.log(data.ride);
+      })
+      .catch(error => console.error('Error:', error));
+    }
+  </script>
+</body>
+</html>
